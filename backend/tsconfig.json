@@ -1,4 +1,8 @@
 {
+  "include": [
+    "**/*",
+    "testService.ts"
+  ],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
