@@ -34,7 +34,7 @@ export class SeriesService {
         allSeries(
           first: 50,
           filter: {
-            titleId: 6,
+            titleId: 2,
             types: ESPORTS
           },
           orderBy: StartTimeScheduled,

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket Test</title>
+</head>
+<body>
+  <h1>WebSocket Test</h1>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io('http://localhost:3000'); // Adjust the URL as necessary
+
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server');
+
+      socket.emit('message', 'Hello from client');
+
+      socket.on('message', (data) => {
+        console.log('Received message:', data);
+      });
+
+      socket.on('update', (data) => {
+        console.log('Received update:', data);
+      });
+    });
+  </script>
+</body>
+</html>
