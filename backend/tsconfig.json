@@ -1,7 +1,12 @@
 {
   "include": [
     "**/*",
-    "testService.ts"
+    "!**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tsconfig.tsbuildinfo"
   ],
   "compilerOptions": {
     "module": "commonjs",
