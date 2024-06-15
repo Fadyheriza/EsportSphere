@@ -10,6 +10,8 @@ $ npm run start
 FRONTEND CONFIG:
 cd frontend 
 npm install
+npm install axios
+npm install react-router-dom@latest
 npm run start
 
 windows + s / env
