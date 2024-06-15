@@ -1,33 +1,24 @@
-import React from 'react';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql, useQuery } from '@apollo/client';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
-  cache: new InMemoryCache(),
-});
-
-const HELLO_QUERY = gql`
-  query {
-    sayHello
-  }
-`;
-
-function Hello() {
-  const { loading, error, data } = useQuery(HELLO_QUERY);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  return <h1>{data.sayHello}</h1>;
-}
+import logo from './logo.svg';
+import './App.css';
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <div className="App">
-        <Hello />
-      </div>
-    </ApolloProvider>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
   );
 }
 
