@@ -9,3 +9,9 @@ windows + s / env
 Umgebungsvariablen
 Benutzervariablen/PATH
 speicherpfad für node.js hinzufügen
+
+
+
+cd frontend 
+npm install
+npm run
