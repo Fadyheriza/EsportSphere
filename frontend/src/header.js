@@ -2,8 +2,8 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header>
-      <h1>Willkommen bei EsportSphere</h1>
+    <header className="App-header text-center"> {/* Added text-center class */}
+      <h1>EsportSphere</h1>
     </header>
   );
 };
