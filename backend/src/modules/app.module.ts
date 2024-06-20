@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { SeriesStateModule } from '../modules/series/series-state.module'; // Correct import path
 import { SeriesEventsModule } from '../modules/websocket/series-events.module';
 import { FileDownloadModule } from '../modules/file-download/file-download.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import configuration from '../config/configuration';
 
 @Module({
@@ -16,5 +18,7 @@ import configuration from '../config/configuration';
     SeriesEventsModule,
     FileDownloadModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

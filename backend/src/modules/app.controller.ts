@@ -2,10 +2,20 @@ import { Controller, Get } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
-@ApiTags('default') // Tag for grouping related endpoints
+@ApiTags('default')
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Get('ongoing-matches')
+  getOngoingMatches(){
+    return this.appService.getOngoingMatches();
+  }
+
+  @Get('game-info')
+  getGameInfo() {
+    return this.appService.getGameInfo();
+  }
 
   @Get()
   @ApiOperation({ summary: 'Get Hello message' }) // Operation summary

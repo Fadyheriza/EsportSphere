@@ -10,7 +10,7 @@ const MainContent = () => {
   // Function to fetch ongoing matches from API
   const fetchOngoingMatches = async () => {
     try {
-      const response = await axios.get('/api/ongoing-matches'); // Adjust the URL according to your API endpoint
+      const response = await axios.get('http://localhost:3000/api/ongoing-matches'); // Adjust the URL according to your API endpoint
       setOngoingMatches(response.data);
     } catch (error) {
       console.error('Error fetching ongoing matches:', error);
@@ -20,7 +20,7 @@ const MainContent = () => {
   // Function to fetch game information from API
   const fetchGameInfo = async () => {
     try {
-      const response = await axios.get('/api/game-info'); // Adjust the URL according to your API endpoint
+      const response = await axios.get('http://localhost:3000/api/game-info'); // Adjust the URL according to your API endpoint
       setGameInfo(response.data);
     } catch (error) {
       console.error('Error fetching game info:', error);
