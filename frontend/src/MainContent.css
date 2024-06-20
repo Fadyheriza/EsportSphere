@@ -1,0 +1,17 @@
+/* MainContent.css */
+.game-section {
+    margin-bottom: 2rem;
+  }
+  
+  .team-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .player-item {
+    background-color: #f8f9fa;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+  }
+  

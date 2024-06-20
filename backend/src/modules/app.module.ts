@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
-import { SeriesStateModule } from '../modules/series/series-state.module'; // Correct import path
+import { SeriesStateModule } from '../modules/series/series-state.module'; 
 import { SeriesEventsModule } from '../modules/websocket/series-events.module';
 import { FileDownloadModule } from '../modules/file-download/file-download.module';
+import { SeriesStateService } from  '../modules/series/series-state.service';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import configuration from '../config/configuration';
@@ -14,11 +16,12 @@ import configuration from '../config/configuration';
       load: [configuration],
       envFilePath: '.env',
     }),
+    HttpModule,
     SeriesStateModule,
     SeriesEventsModule,
     FileDownloadModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeriesStateService],
 })
 export class AppModule {}
