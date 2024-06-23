@@ -1,8 +1,8 @@
 import React from 'react';
 import './Contact.css';
-import fadyImage from './Fady.png';
-import benediktImage from './Benedikt.jpg';
-import fabioImage from './Fabio.jpg';
+import fadyImage from '../../assets/images/Fady.png';
+import benediktImage from '../../assets/images/Benedikt.jpg';
+import fabioImage from '../../assets/images/Fabio.jpg';
 
 const Contact = () => {
   return (

@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Header from './header';
-import MainContent from './mainContent';
-import Footer from './footer';
-import Contact from './contact';
-import About from './about';
-import Teams from './teams'; // Import the new Teams component
-import Games from './games'; // Import the new Games component
+import Header from './components/header/header';
+import MainContent from './components/mainContent/mainContent';
+import Footer from './components/footer/footer';
+import Contact from './components/contact/contact';
+import About from './components/about/about';
+import Teams from './components/teams/teams'; // Import the new Teams component
+import Games from './components/games/games'; // Import the new Games component
 
 function App() {
   return (

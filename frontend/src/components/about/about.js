@@ -9,7 +9,7 @@ const About = () => {
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">Why We Created This Site</h5>
-            <p className="card-text">[Your reason for creating the site]</p>
+            <p className="card-text">We wanted to create EsportSphere because there was nothing like it around. We were unhappy with other sites and services and just wanted to provide the best Esport site on the internet.</p>
           </div>
         </div>
       </div>
