@@ -1,11 +1,41 @@
 import React from 'react';
+import './About.css';
 
 const About = () => {
   return (
     <div className="container my-5">
-      <h2>About Us</h2>
-      <p>We are the creators of EsportSphere.</p>
-      {/* Hier kannst du weitere Informationen über das Team hinzufügen */}
+      <div className="box">
+        <h1 className="about-title">About Us</h1>
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">Why We Created This Site</h5>
+            <p className="card-text">[Your reason for creating the site]</p>
+          </div>
+        </div>
+      </div>
+      <div className="box mt-5">
+        <h2>Common Questions and Answers</h2>
+        <div className="faq">
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Question 1</h5>
+              <p className="card-text">Answer to question 1.</p>
+            </div>
+          </div>
+          <div className="card mt-3">
+            <div className="card-body">
+              <h5 className="card-title">Question 2</h5>
+              <p className="card-text">Answer to question 2.</p>
+            </div>
+          </div>
+          <div className="card mt-3">
+            <div className="card-body">
+              <h5 className="card-title">Question 3</h5>
+              <p className="card-text">Answer to question 3.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

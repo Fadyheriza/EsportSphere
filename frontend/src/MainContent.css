@@ -1,17 +1,66 @@
-/* MainContent.css */
+.container {
+  padding: 20px;
+}
+
+.my-5 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.card-img-top {
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #343a40;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.games-box,
+.teams-box {
+  margin-top: 40px;
+}
+
+.games-box h3,
+.teams-box h3 {
+  margin-bottom: 20px;
+}
+
 .game-section {
-    margin-bottom: 2rem;
-  }
-  
-  .team-section {
-    margin-bottom: 1.5rem;
-  }
-  
-  .player-item {
-    background-color: #f8f9fa;
-    margin-bottom: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-  }
-  
+  margin-bottom: 2rem;
+}
+
+.team-section {
+  margin-bottom: 1.5rem;
+}
+
+.player-item {
+  background-color: #f8f9fa;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+}
