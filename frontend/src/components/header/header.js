@@ -19,6 +19,8 @@ const Header = () => {
           <>
             <span className="text-white">Welcome, {authState.user ? authState.user.username : 'User'}</span>
             {' | '}
+            <Link to="/profile" className="text-white text-decoration-none">Profile</Link>
+            {' | '}
             <button onClick={logout} className="text-white text-decoration-none" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Logout</button>
           </>
         ) : (
