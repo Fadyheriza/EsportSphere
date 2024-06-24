@@ -5,10 +5,7 @@ import { HttpModule } from '@nestjs/axios';
 import { SeriesStateModule } from '../modules/series/series-state.module';
 import { SeriesEventsModule } from '../modules/websocket/series-events.module';
 import { FileDownloadModule } from '../modules/file-download/file-download.module';
-import { SeriesStateService } from '../modules/series/series-state.service';
-import { CSGOTeamsModule } from '../cs teams/csgo-teams.module';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { SeriesStateService } from  '../modules/series/series-state.service';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import configuration from '../config/configuration';
@@ -36,8 +33,6 @@ import configuration from '../config/configuration';
     SeriesStateModule,
     SeriesEventsModule,
     FileDownloadModule,
-    UsersModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, SeriesStateService],

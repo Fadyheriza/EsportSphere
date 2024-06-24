@@ -8,41 +8,42 @@ const TeamsList = () => {
     const [teamDetails, setTeamDetails] = useState({});
 
     useEffect(() => {
-        const fetchTeams = async () => {
-            const teamIds = [1, 2, 4]; // Replace with your actual team IDs
-            const teamsData = await Promise.all(
-                teamIds.map(async (id) => {
-                    const response = await axios.get(`http://localhost:3000/csgo-teams/${id}`, {
-                        headers: {
-                            'x-api-key': 'your-api-key'
-                        }
-                    });
-                    return response.data;
-                })
-            );
-            setTeams(teamsData);
-        };
-
-        fetchTeams();
-    }, []);
-
-    const handleMouseEnter = async (teamId) => {
-        setHoverTeam(teamId);
-        if (!teamDetails[teamId]) {
-            const response = await axios.get(`http://localhost:3000/csgo-teams/${teamId}`, {
-                headers: {
-                    'x-api-key': 'your-api-key'
-                }
-            });
-            setTeamDetails(prevDetails => ({
-                ...prevDetails,
-                [teamId]: response.data.players
-            }));
+        if (teamId) {
+            fetchTeam();
         }
-    };
+    }, [teamId, fetchTeam]);
 
-    const handleMouseLeave = () => {
-        setHoverTeam(null);
+    const renderContent = () => {
+        if (!team) return null;
+        switch (activeTab) {
+            case 'roster':
+                return (
+                    <div>
+                        <h5>Roster</h5>
+                        <ul>
+                            {team.roster.map(player => (
+                                <li key={player.id}>{player.name} - {player.role}</li>
+                            ))}
+                        </ul>
+                    </div>
+                );
+            case 'statistics':
+                return (
+                    <div>
+                        <h5>Statistics</h5>
+                        <p>{team.statistics}</p>
+                    </div>
+                );
+            case 'earnings':
+                return (
+                    <div>
+                        <h5>Earnings</h5>
+                        <p>{team.earnings}</p>
+                    </div>
+                );
+            default:
+                return null;
+        }
     };
 
     return (
