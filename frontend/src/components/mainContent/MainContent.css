@@ -11,6 +11,8 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;
+  width: 100%;
+  /* Ensure the cards are full width within their columns */
 }
 
 .card-img-top {
@@ -39,28 +41,45 @@
   border-color: #007bff;
 }
 
-.games-box,
-.teams-box {
-  margin-top: 40px;
-}
-
-.games-box h3,
-.teams-box h3 {
+.row .col-lg-5,
+.row .col-md-6 {
   margin-bottom: 20px;
+  flex: 0 0 auto;
+  max-width: 100%;
+  /* Increase the width of the columns */
 }
 
-.game-section {
-  margin-bottom: 2rem;
+.csgo-logo {
+  height: 100px;
+  width: 250px;
+  object-fit: cover;
+  margin-right: 15px;
 }
 
-.team-section {
-  margin-bottom: 1.5rem;
+.team-logo {
+  height: 100px;
+  object-fit: cover;
+  cursor: pointer;
 }
 
-.player-item {
-  background-color: #f8f9fa;
-  margin-bottom: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  border: 1px solid #dee2e6;
-  border-radius: 0.25rem;
+.player-list {
+  margin-top: 10px;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.player-list li {
+  margin-bottom: 5px;
+}
+
+@media (max-width: 992px) {
+  .row .col-lg-5 {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .row .col-md-6 {
+    max-width: 100%;
+  }
 }
