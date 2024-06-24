@@ -1,12 +1,8 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
-import { ConfigModule } from '@nestjs/config';
-import { SeriesStateModule } from '../modules/series/series-state.module'; 
-import { SeriesEventsModule } from '../modules/websocket/series-events.module';
-import { FileDownloadModule } from '../modules/file-download/file-download.module';
-import { SeriesStateService } from  '../modules/series/series-state.service';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import configuration from '../config/configuration';
 
 @Module({
@@ -16,12 +12,21 @@ import configuration from '../config/configuration';
       load: [configuration],
       envFilePath: '.env',
     }),
-    HttpModule,
-    SeriesStateModule,
-    SeriesEventsModule,
-    FileDownloadModule,
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const uri = configService.get<string>('mongodbUri');
+        console.log('MongoDB URI:', uri);  // Debugging line
+        return {
+          uri,
+        };
+      },
+      inject: [ConfigService],
+    }),
+    UsersModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, SeriesStateService],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,11 +1,11 @@
 terminal gitbash
 
 BACKEND CONFIG:
-$ cd backend
-$ npm install
-$ npm install @nestjs/axios @nestjs/config
-$ npm run build
-$ npm run start
+cd backend
+npm install
+npm install @nestjs/mongoose mongoose @nestjs/jwt @nestjs/passport passport passport-jwt bcryptjs @nestjs/config @nestjs/axios
+npm run build
+npm run start
 
 FRONTEND CONFIG:
 cd frontend 
