@@ -8,42 +8,41 @@ const TeamsList = () => {
     const [teamDetails, setTeamDetails] = useState({});
 
     useEffect(() => {
-        if (teamId) {
-            fetchTeam();
-        }
-    }, [teamId, fetchTeam]);
+        const fetchTeams = async () => {
+            const teamIds = [1, 2, 4]; // Replace with your actual team IDs
+            const teamsData = await Promise.all(
+                teamIds.map(async (id) => {
+                    const response = await axios.get(`http://localhost:3000/csgo-teams/${id}`, {
+                        headers: {
+                            'x-api-key': 'your-api-key'
+                        }
+                    });
+                    return response.data;
+                })
+            );
+            setTeams(teamsData);
+        };
 
-    const renderContent = () => {
-        if (!team) return null;
-        switch (activeTab) {
-            case 'roster':
-                return (
-                    <div>
-                        <h5>Roster</h5>
-                        <ul>
-                            {team.roster.map(player => (
-                                <li key={player.id}>{player.name} - {player.role}</li>
-                            ))}
-                        </ul>
-                    </div>
-                );
-            case 'statistics':
-                return (
-                    <div>
-                        <h5>Statistics</h5>
-                        <p>{team.statistics}</p>
-                    </div>
-                );
-            case 'earnings':
-                return (
-                    <div>
-                        <h5>Earnings</h5>
-                        <p>{team.earnings}</p>
-                    </div>
-                );
-            default:
-                return null;
+        fetchTeams();
+    }, []);
+
+    const handleMouseEnter = async (teamId) => {
+        setHoverTeam(teamId);
+        if (!teamDetails[teamId]) {
+            const response = await axios.get(`http://localhost:3000/csgo-teams/${teamId}`, {
+                headers: {
+                    'x-api-key': 'your-api-key'
+                }
+            });
+            setTeamDetails(prevDetails => ({
+                ...prevDetails,
+                [teamId]: response.data.players
+            }));
         }
+    };
+
+    const handleMouseLeave = () => {
+        setHoverTeam(null);
     };
 
     return (
@@ -53,11 +52,11 @@ const TeamsList = () => {
                 {teams.map(team => (
                     <div className="col-md-4" key={team.id}>
                         <div className="card mb-4">
-                            <img 
-                                src={team.logoUrl} 
-                                className="card-img-top team-logo" 
-                                alt={`${team.name} logo`} 
-                                onMouseEnter={() => handleMouseEnter(team.id)} 
+                            <img
+                                src={team.logoUrl}
+                                className="card-img-top team-logo"
+                                alt={`${team.name} logo`}
+                                onMouseEnter={() => handleMouseEnter(team.id)}
                                 onMouseLeave={handleMouseLeave}
                             />
                             <div className="card-body">
