@@ -25,7 +25,7 @@ export class AppController {
   @ApiOperation({ summary: 'Get Series State' }) // Operation summary
   @ApiResponse({ status: 200, description: 'Successful response' }) // Response details
   async getSeriesState(@Param('id') seriesId: string): Promise<any> {
-    return this.seriesStateService.getSeriesState(seriesId);
+    return this.seriesStateService.getSeriesInNext24Hours();
   }
 
   @Get()

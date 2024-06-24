@@ -40,6 +40,6 @@ import configuration from '../config/configuration';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, SeriesStateService],
+  providers: [AppService],
 })
 export class AppModule { }

@@ -8,5 +8,6 @@ import { SeriesStateController } from './series-state.controller';
   imports: [HttpModule, ConfigModule],
   providers: [SeriesStateService],
   controllers: [SeriesStateController],
+  exports: [SeriesStateService],  // Add this line to export the service
 })
 export class SeriesStateModule {}

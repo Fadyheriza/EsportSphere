@@ -1,12 +1,12 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { SeriesStateService } from './series-state.service';
 
 @Controller('series-state')
 export class SeriesStateController {
   constructor(private readonly seriesStateService: SeriesStateService) {}
 
-  @Get(':id')
-  async getSeriesState(@Param('id') id: string) {
-    return this.seriesStateService.getSeriesState(id);
+  @Get('next-24-hours')
+  async getSeriesInNext24Hours() {
+    return this.seriesStateService.getSeriesInNext24Hours();
   }
 }

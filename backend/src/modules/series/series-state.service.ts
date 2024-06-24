@@ -14,47 +14,64 @@ export class SeriesStateService {
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
   ) {
-    this.apiUrl = this.configService.get<string>('SERIES_STATE_API_URL') ?? '';
+    this.apiUrl = this.configService.get<string>('GRID_API_URL') ?? '';
     this.apiKey = this.configService.get<string>('GRID_API_KEY') ?? '';
     this.logger.log(`API URL: ${this.apiUrl}`);
     this.logger.log(`API Key: ${this.apiKey}`);
   }
 
-  async getSeriesState(seriesId: string): Promise<any> {
+  async getSeriesInNext24Hours(): Promise<any> {
     if (!this.apiUrl || !this.apiKey) {
       this.logger.error('API URL or API Key is missing');
       throw new Error('API URL or API Key is missing');
     }
 
     const query = `
-      query GetLiveDotaSeriesState {
-        seriesState(id: "${seriesId}") {
-          valid
-          updatedAt
-          format
-          started
-          finished
-          teams {
-            name
-            won
-          }
-          games(filter: { started: true, finished: false }) {
-            sequenceNumber
-            teams {
-              name
-              players {
-                name
-                kills
-                deaths
-                netWorth
-                money
-                position {
-                  x
-                  y
-                }
-              }
+      query GetAllSeriesInNext24Hours {
+        allSeries(
+          filter:{
+            titleIds: {in: [28]}
+            startTimeScheduled:{
+              gte: "2024-06-24T15:00:07+02:00"
+              lte: "2024-06-25T15:00:07+02:00"
             }
           }
+          orderBy: StartTimeScheduled
+        ) {
+          totalCount,
+          pageInfo{
+            hasPreviousPage
+            hasNextPage
+            startCursor
+            endCursor
+          }
+          edges{
+            cursor
+            node{
+              ...seriesFields
+            }
+          }
+        }
+      }
+
+      fragment seriesFields on Series {
+        id
+        title {
+          nameShortened
+        }
+        tournament {
+          nameShortened
+        }
+        startTimeScheduled
+        format {
+          name
+          nameShortened
+        }
+        teams {
+          baseInfo {
+            name
+          }
+          scoreAdvantage
         }
       }
     `;
@@ -71,7 +88,7 @@ export class SeriesStateService {
             this.logger.error(`Unexpected response status: ${response.status}`);
             throw new Error(`Unexpected response status: ${response.status}`);
           }
-          return response.data.data.seriesState;
+          return response.data.data.allSeries;
         }),
         catchError(err => {
           const status = err.response?.status;
