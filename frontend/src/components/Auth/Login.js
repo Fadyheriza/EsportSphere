@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Importiere useNavigate
 import AuthContext from '../../context/AuthContext';
 
 const Login = () => {
@@ -7,6 +8,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate(); // Verwende useNavigate für die Navigation
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,6 +16,9 @@ const Login = () => {
             const response = await axios.post('http://localhost:3000/auth/login', { username, password });
             setToken(response.data.access_token);
             setMessage('Login successful!');
+            setTimeout(() => {
+                navigate('/'); // Weiterleitung zur Homepage nach erfolgreichem Login
+            }, 2000);
         } catch (error) {
             console.error('Login failed:', error);
             setMessage('Login failed!');
@@ -38,4 +43,3 @@ const Login = () => {
 };
 
 export default Login;
-
