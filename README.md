@@ -3,7 +3,8 @@ terminal gitbash
 BACKEND CONFIG:
 cd backend
 npm install
-npm install @nestjs/mongoose mongoose @nestjs/jwt @nestjs/passport passport passport-jwt bcryptjs @nestjs/config @nestjs/axios
+npm install @nestjs/common @nestjs/core @nestjs/jwt @nestjs/mongoose @nestjs/passport @nestjs/platform-express bcrypt mongoose passport passport-jwt
+npm install -g @nestjs/cli
 npm run build
 npm run start
 
