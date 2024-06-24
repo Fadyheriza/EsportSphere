@@ -20,7 +20,7 @@ export class CSGOTeamsService {
     this.logger.log(`API Key: ${this.apiKey}`);
   }
 
-  async getTeams(): Promise<any> {
+  async getTeamsByTitleId(titleId: number): Promise<any> {
     if (!this.apiUrl || !this.apiKey) {
       this.logger.error('API URL or API Key is missing');
       throw new Error('API URL or API Key is missing');
@@ -29,7 +29,7 @@ export class CSGOTeamsService {
     const query = `
       query GetTeams {
         teams(first: 50, after: null, filter: {
-          titleId: 28
+          titleId: ${titleId}
         }) {
           totalCount
           pageInfo {
@@ -95,5 +95,18 @@ export class CSGOTeamsService {
         })
       )
       .toPromise();
+  }
+
+  async getTeam(teamId: string): Promise<any> {
+    const titleId = 28; // Fixed titleId as per requirement
+    const teamsData = await this.getTeamsByTitleId(titleId);
+    const team = teamsData.edges.find(team => team.node.id === teamId)?.node;
+
+    if (!team) {
+      this.logger.error(`Team with ID ${teamId} not found`);
+      throw new Error('Not Found: The specified team does not exist');
+    }
+
+    return team;
   }
 }
