@@ -77,9 +77,9 @@ function Profile() {
               <label>Password:</label>
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Leave blank to keep current password" />
             </div>
-            <button type="submit">Update Profile</button>
+            <button type="submit" style={{ marginRight: '10px' }}>Update Profile</button>
+            <button type="button" onClick={handleDelete} style={{ marginLeft: '10px' }}>Delete Profile</button>
           </form>
-          <button onClick={handleDelete}>Delete Profile</button>
         </div>
       ) : (
         <p>Loading profile...</p>

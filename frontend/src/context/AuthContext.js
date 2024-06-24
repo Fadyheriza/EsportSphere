@@ -1,4 +1,3 @@
-// context/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -36,14 +35,19 @@ export const AuthProvider = ({ children }) => {
     fetchUserData();
   };
 
-  const logout = () => {
+  const logout = (callback) => {
     localStorage.removeItem('token');
     setAuthState({ token: null, user: null, message: 'You have been logged out!' });
     delete axios.defaults.headers.common['Authorization'];
+    if (callback) callback();
+  };
+
+  const clearMessage = () => {
+    setAuthState((prevState) => ({ ...prevState, message: '' }));
   };
 
   return (
-    <AuthContext.Provider value={{ authState, setToken, logout }}>
+    <AuthContext.Provider value={{ authState, setToken, logout, clearMessage }}>
       {children}
       {authState.message && <p>{authState.message}</p>}
     </AuthContext.Provider>

@@ -1,9 +1,14 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
 const Header = () => {
   const { authState, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(() => navigate('/login')); // Übergebe den Callback zur Navigation
+  };
 
   return (
     <header className="App-header text-center">
@@ -21,7 +26,7 @@ const Header = () => {
             {' | '}
             <Link to="/profile" className="text-white text-decoration-none">Profile</Link>
             {' | '}
-            <button onClick={logout} className="text-white text-decoration-none" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Logout</button>
+            <button onClick={handleLogout} className="text-white text-decoration-none" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Logout</button>
           </>
         ) : (
           <>

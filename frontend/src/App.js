@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Header from './components/header/header';
 import MainContent from './components/mainContent/mainContent';
@@ -11,29 +11,42 @@ import Games from './components/games/games';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import Profile from './components/profil/Profile';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, AuthContext } from './context/AuthContext';
 
-function App() {
+const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
-          <Header />
-          <Routes>
-            <Route path="/" element={<MainContent />} />
-            <Route path="/teams" element={<Teams />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-          <Footer />
-        </div>
+        <Main />
       </Router>
     </AuthProvider>
   );
-}
+};
+
+const Main = () => {
+  const location = useLocation();
+  const { clearMessage } = useContext(AuthContext);
+
+  useEffect(() => {
+    clearMessage();
+  }, [location.pathname, clearMessage]); // clearMessage zur Abhängigkeitsliste hinzufügen
+
+  return (
+    <div className="App">
+      <Header />
+      <Routes>
+        <Route path="/" element={<MainContent />} />
+        <Route path="/teams" element={<Teams />} />
+        <Route path="/games" element={<Games />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
+};
 
 export default App;
