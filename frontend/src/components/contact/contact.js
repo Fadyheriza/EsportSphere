@@ -17,14 +17,17 @@ const Contact = () => {
             <div className="image-box">
               <img src={fadyImage} alt="Fady Heriza" className="contact-image" />
               <p className="image-text">Fady Heriza</p>
+              <p className="email-text">fady.heriza@stud.fh-campuswien.ac.at</p>
             </div>
             <div className="image-box">
               <img src={benediktImage} alt="Benedikt Aigner" className="contact-image" />
               <p className="image-text">Benedikt Aigner</p>
+              <p className="email-text">benedikt.aigner@stud.fh-campuswien.ac.at</p>
             </div>
             <div className="image-box">
               <img src={fabioImage} alt="Fabio Jindrak" className="contact-image" />
               <p className="image-text">Fabio Jindrak</p>
+              <p className="email-text">fabio.jindrak@stud.fh-campuswien.ac.at</p>
             </div>
           </div>
         </div>
