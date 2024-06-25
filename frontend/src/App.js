@@ -7,7 +7,6 @@ import Footer from './components/footer/footer';
 import Contact from './components/contact/contact';
 import About from './components/about/about';
 import Teams from './components/teams/teams';
-import Games from './components/games/games';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import Profile from './components/profil/Profile';
@@ -37,7 +36,6 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/teams" element={<Teams />} />
-        <Route path="/games" element={<Games />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />

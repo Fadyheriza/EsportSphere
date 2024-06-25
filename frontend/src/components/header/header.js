@@ -18,8 +18,6 @@ const Header = () => {
       <nav>
         <Link to="/teams" className="text-white text-decoration-none">Teams</Link>
         {' | '}
-        <Link to="/games" className="text-white text-decoration-none">Games</Link>
-        {' | '}
         {authState.token ? (
           <>
             <span className="text-white">Welcome, {authState.user ? authState.user.username : 'User'}</span>

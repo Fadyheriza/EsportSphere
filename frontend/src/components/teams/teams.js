@@ -4,75 +4,94 @@ import './Teams.css';
 
 const TeamsList = () => {
     const [teams, setTeams] = useState([]);
-    const [hoverTeam, setHoverTeam] = useState(null);
     const [teamDetails, setTeamDetails] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    const teamIds = [47353, 47381, 47369, 47372, 47355, 47360, 92, 78, 98, 234, 2148, 47573, 2977, 47364, 47850, 47414, 47310, 48662, 47388, 48489, 47356];
+
+    const fetchTeamData = async (id) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/csgo-teams/${id}`, {
+                headers: {
+                    'x-api-key': 'your-api-key'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Error fetching team data for ID ${id}:`, error);
+            throw error;
+        }
+    };
+
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     useEffect(() => {
         const fetchTeams = async () => {
-            const teamIds = [1, 2, 4]; // Replace with your actual team IDs
-            const teamsData = await Promise.all(
-                teamIds.map(async (id) => {
-                    const response = await axios.get(`http://localhost:3000/csgo-teams/${id}`, {
-                        headers: {
-                            'x-api-key': 'your-api-key'
-                        }
-                    });
-                    return response.data;
-                })
-            );
-            setTeams(teamsData);
+            try {
+                for (const id of teamIds) {
+                    const teamData = await fetchTeamData(id);
+                    setTeams(prevTeams => [...prevTeams, teamData]);
+                    await delay(3000);  
+                }
+            } catch (error) {
+                console.error("Error fetching teams:", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchTeams();
     }, []);
 
-    const handleMouseEnter = async (teamId) => {
-        setHoverTeam(teamId);
+    const handleLogoClick = async (teamId) => {
         if (!teamDetails[teamId]) {
-            const response = await axios.get(`http://localhost:3000/csgo-teams/${teamId}`, {
-                headers: {
-                    'x-api-key': 'your-api-key'
-                }
-            });
-            setTeamDetails(prevDetails => ({
-                ...prevDetails,
-                [teamId]: response.data.players
-            }));
+            try {
+                const response = await axios.get(`http://localhost:3000/csgo-teams/${teamId}`, {
+                    headers: {
+                        'x-api-key': 'your-api-key'
+                    }
+                });
+                setTeamDetails(prevDetails => ({
+                    ...prevDetails,
+                    [teamId]: response.data.players
+                }));
+            } catch (error) {
+                console.error(`Error fetching team details for team ${teamId}:`, error);
+            }
         }
-    };
-
-    const handleMouseLeave = () => {
-        setHoverTeam(null);
     };
 
     return (
         <div className="container my-5">
             <h1 className="team-title">CSGO Teams</h1>
-            <div className="row">
-                {teams.map(team => (
-                    <div className="col-md-4" key={team.id}>
-                        <div className="card mb-4">
-                            <img
-                                src={team.logoUrl}
-                                className="card-img-top team-logo"
-                                alt={`${team.name} logo`}
-                                onMouseEnter={() => handleMouseEnter(team.id)}
-                                onMouseLeave={handleMouseLeave}
-                            />
-                            <div className="card-body">
-                                <h5 className="card-title">{team.name}</h5>
-                                {hoverTeam === team.id && (
-                                    <ul className="player-list">
-                                        {teamDetails[team.id]?.map(player => (
-                                            <li key={player.id}>{player.name}</li>
-                                        ))}
-                                    </ul>
-                                )}
+            {loading && teams.length === 0 ? (
+                <p>Loading teams...</p>
+            ) : (
+                <div className="row">
+                    {teams.map(team => (
+                        <div className="col-md-4" key={team.id}>
+                            <div className="card mb-4">
+                                <img
+                                    src={team.logoUrl}
+                                    className="card-img-top team-logo"
+                                    alt={`${team.name} logo`}
+                                    onClick={() => handleLogoClick(team.id)}
+                                />
+                                <div className="card-body">
+                                    <h5 className="card-title">{team.name}</h5>
+                                    {teamDetails[team.id] && (
+                                        <ul className="player-list">
+                                            {teamDetails[team.id].map(player => (
+                                                <li key={player.id}>{player.name}</li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

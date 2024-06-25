@@ -9,4 +9,9 @@ export class CSGOTeamsController {
   async getTeam(@Param('id') id: string) {
     return this.csgoTeamsService.getTeam(id);
   }
+
+  @Get(':id/roster')
+  async getTeamRoster(@Param('id') id: string) {
+    return this.csgoTeamsService.getTeamRoster(id);
+  }
 }

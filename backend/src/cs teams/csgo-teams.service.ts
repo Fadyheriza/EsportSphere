@@ -21,11 +21,6 @@ export class CSGOTeamsService {
   }
 
   async getTeam(teamId: string): Promise<any> {
-    if (!this.apiUrl || !this.apiKey) {
-      this.logger.error('API URL or API Key is missing');
-      throw new Error('API URL or API Key is missing');
-    }
-
     const query = `
       query GetTeam {
         team(id: "${teamId}") {
@@ -54,10 +49,7 @@ export class CSGOTeamsService {
     return this.httpService.post(this.apiUrl, { query }, { headers })
       .pipe(
         map((response: any) => {
-          this.logger.log(`Response status: ${response.status}`);
-          this.logger.log(`Response data: ${JSON.stringify(response.data)}`);
           if (response.status !== 200) {
-            this.logger.error(`Unexpected response status: ${response.status}`);
             throw new Error(`Unexpected response status: ${response.status}`);
           }
           return response.data.data.team;
@@ -65,9 +57,6 @@ export class CSGOTeamsService {
         catchError(err => {
           const status = err.response?.status;
           const data = err.response?.data;
-
-          this.logger.error(`Error status: ${status}`);
-          this.logger.error(`Error response data: ${JSON.stringify(data)}`);
 
           if (status === 401) {
             throw new Error('Unauthorized: Invalid API key');
@@ -77,6 +66,58 @@ export class CSGOTeamsService {
             throw new Error('Not Found: The specified team does not exist');
           } else {
             throw new Error('Error fetching team details');
+          }
+        })
+      )
+      .toPromise();
+  }
+
+  async getTeamRoster(teamId: string): Promise<any> {
+    const query = `
+      query GetTeamRoster {
+        players(filter: {teamIdFilter: {id: "${teamId}"}}) {
+          edges {
+            node {
+              id
+              nickname
+              title {
+                name
+              }
+            }
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+          }
+        }
+      }
+    `;
+
+    const headers = {
+      'x-api-key': this.apiKey,
+      'Content-Type': 'application/json',
+    };
+
+    return this.httpService.post(this.apiUrl, { query }, { headers })
+      .pipe(
+        map((response: any) => {
+          if (response.status !== 200) {
+            throw new Error(`Unexpected response status: ${response.status}`);
+          }
+          return response.data.data.players.edges.map(edge => edge.node);
+        }),
+        catchError(err => {
+          const status = err.response?.status;
+          const data = err.response?.data;
+
+          if (status === 401) {
+            throw new Error('Unauthorized: Invalid API key');
+          } else if (status === 400) {
+            throw new Error(`Bad Request: ${data.errors?.[0]?.message}`);
+          } else if (status === 404) {
+            throw new Error('Not Found: The specified team does not exist');
+          } else {
+            throw new Error('Error fetching team roster');
           }
         })
       )
