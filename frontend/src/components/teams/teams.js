@@ -23,6 +23,20 @@ const TeamsList = () => {
         }
     };
 
+    const fetchTeamRoster = async (id) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/csgo-teams/${id}/roster`, {
+                headers: {
+                    'x-api-key': 'your-api-key'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Error fetching team roster for ID ${id}:`, error);
+            throw error;
+        }
+    };
+
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     useEffect(() => {
@@ -43,17 +57,13 @@ const TeamsList = () => {
         fetchTeams();
     }, []);
 
-    const handleLogoClick = async (teamId) => {
+    const handleMouseEnter = async (teamId) => {
         if (!teamDetails[teamId]) {
             try {
-                const response = await axios.get(`http://localhost:3000/csgo-teams/${teamId}`, {
-                    headers: {
-                        'x-api-key': 'your-api-key'
-                    }
-                });
+                const rosterData = await fetchTeamRoster(teamId);
                 setTeamDetails(prevDetails => ({
                     ...prevDetails,
-                    [teamId]: response.data.players
+                    [teamId]: rosterData
                 }));
             } catch (error) {
                 console.error(`Error fetching team details for team ${teamId}:`, error);
@@ -70,19 +80,21 @@ const TeamsList = () => {
                 <div className="row">
                     {teams.map(team => (
                         <div className="col-md-4" key={team.id}>
-                            <div className="card mb-4">
+                            <div 
+                                className="card mb-4" 
+                                onMouseEnter={() => handleMouseEnter(team.id)}
+                            >
                                 <img
                                     src={team.logoUrl}
                                     className="card-img-top team-logo"
                                     alt={`${team.name} logo`}
-                                    onClick={() => handleLogoClick(team.id)}
                                 />
                                 <div className="card-body">
                                     <h5 className="card-title">{team.name}</h5>
                                     {teamDetails[team.id] && (
                                         <ul className="player-list">
                                             {teamDetails[team.id].map(player => (
-                                                <li key={player.id}>{player.name}</li>
+                                                <li key={player.id}>{player.nickname}</li>
                                             ))}
                                         </ul>
                                     )}
